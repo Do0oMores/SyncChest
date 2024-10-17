@@ -1,0 +1,6 @@
+name: SyncChest
+version: '1.0-SNAPSHOT'
+main: top.mores.syncChest.SyncChest
+api-version: '1.18'
+authors: [ Mores ]
+description: 跨服箱子同步
