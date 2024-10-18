@@ -1,6 +1,7 @@
-package top.mores.syncChest;
+package top.mores.syncchest;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import top.mores.syncchest.listener.PlayerListener;
 
 public final class SyncChest extends JavaPlugin {
 
@@ -9,6 +10,7 @@ public final class SyncChest extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         System.out.println("SyncChest Plugin Enabled");
     }
 

@@ -1,4 +1,4 @@
-package top.mores.syncChest.utils;
+package top.mores.syncchest.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
-import top.mores.syncChest.SyncChest;
+import top.mores.syncchest.SyncChest;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
