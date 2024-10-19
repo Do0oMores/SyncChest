@@ -23,8 +23,9 @@ public class ChestGUI {
      */
     public void createChest(Player player) {
         String chestName = String.format(ChatColor.GREEN + " %s 的跨服箱子", player.getName());
-        Inventory chest = Bukkit.createInventory(player, 9 * 9, ChatColor.RED + chestName);
-        for (ItemStack item : getItems(player)) {
+        Inventory chest = Bukkit.createInventory(player, 45, ChatColor.RED + chestName);
+        ItemStack[] items = getItems(player);
+        for (ItemStack item : items) {
             chest.addItem(item);
         }
         player.openInventory(chest);

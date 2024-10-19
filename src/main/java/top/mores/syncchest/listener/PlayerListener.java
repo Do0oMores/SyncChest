@@ -1,5 +1,6 @@
 package top.mores.syncchest.listener;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -9,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import top.mores.syncchest.gui.ChestGUI;
 import top.mores.syncchest.utils.FileUtil;
 
@@ -21,16 +22,17 @@ public class PlayerListener implements Listener {
     ChestGUI chestGUI = new ChestGUI();
 
     @EventHandler
-    public void onPlayerClickBlock(PlayerInteractEvent event) {
+    public void onPlayerOpenChest(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
-        if (fileUtil.onWorld(player) &&
+        if (fileUtil.onWorld(player.getWorld().getName()) &&
                 event.getAction().equals(Action.RIGHT_CLICK_BLOCK) &&
-                Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.CHEST) &&
-                location.equals(fileUtil.chestLocation())
+                Objects.requireNonNull(event.getClickedBlock()).getType().equals(Material.CHEST)
         ) {
-            event.setCancelled(true);
-            chestGUI.createChest(player);
+            Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
+            if (location.equals(fileUtil.chestLocation())) {
+                event.setCancelled(true);
+                chestGUI.createChest(player);
+            }
         }
     }
 
@@ -38,10 +40,9 @@ public class PlayerListener implements Listener {
     public void onPlayerCloseInventory(InventoryCloseEvent event) {
         Entity entity = event.getPlayer();
         if (entity instanceof Player player) {
-            Inventory inventory = event.getInventory();
-            Location location = inventory.getLocation();
-            if (location != null && location.equals(fileUtil.chestLocation())) {
-                fileUtil.savePlayerData(player, inventory);
+            InventoryView view = event.getView();
+            if (ChatColor.stripColor(view.getTitle()).equals(String.format(" %s 的跨服箱子", player.getName()))) {
+                fileUtil.savePlayerData(player, event.getInventory());
             }
         }
     }

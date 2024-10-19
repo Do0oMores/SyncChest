@@ -58,8 +58,7 @@ public class FileUtil {
         return null;
     }
 
-    public boolean onWorld(Player player) {
-        String worldName = player.getWorld().getName();
+    public boolean onWorld(String worldName) {
         return worldName.equals(chestWorld);
     }
 
@@ -72,7 +71,6 @@ public class FileUtil {
                 .filter(Objects::nonNull)
                 .map(ItemStackUtil::getItemStackMap)
                 .toList();
-
         File playerDataFile = getDataFile(player);
         if (playerDataFile.exists()) {
             try {
@@ -83,12 +81,12 @@ public class FileUtil {
                 e.fillInStackTrace();
                 player.sendMessage(ChatColor.RED + "数据保存失败");
             }
-        }else {
+        } else {
             createDataFile(player);
         }
     }
 
-    private File getDataFile(Player player){
+    private File getDataFile(Player player) {
         String playerUUID = player.getUniqueId().toString();
         return new File(filePath, playerUUID + ".yml");
     }
